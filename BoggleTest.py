@@ -11,10 +11,10 @@
 #
 # Game Rules:
 #  Boggle is a word game.  The goal is to make as many words as possible
-#  out of the given set of letters laid out in a 4x4 grid.  Words are 
+#  out of the given set of letters laid out in a 4x4 grid.  Words are
 #  formed by starting with any letter and moving to an adjacent letter
 #  (up, down, left, right, or diagonal) and so-forth on.  Once a letter
-#  is used in a word, it can not be used again.  All words must be a 
+#  is used in a word, it can not be used again.  All words must be a
 #  minimum of 3 characters in length.  Finally, in this version, a "q"
 #  will always represent "qu", since "u" nearly always follows "q" in
 #  English.  If a word may be formed multiple ways on the same board, it
@@ -62,36 +62,38 @@
 import sys
 import os
 
-os.chdir(os.path.dirname(__file__)) # go to executable
-
 # get classs
-sys.path.append('boggle')
+sys.path.append("boggle")
 import boggle
 
-if __name__ == '__main__':    
+if __name__ == "__main__":
     if len(sys.argv) != 4:
-        print("Usage: BoggleFast <dictionary_filename> <board_filename> <output_filename>")
+        print(
+            "Usage: python BoggleTest.py <dictionary_filename> <board_filename> <output_filename>"
+        )
         sys.exit(1)
-    
+
     try:
         board = boggle.Board()
         board.FileToBoard(sys.argv[2])
     except Exception as e:
-        print("error with reading board; " + str(e)) 
+        print("error with reading board; " + str(e))
         exit(1)
-    
-    # create read for dictionary and write for output file  
+
+    # create read for dictionary and write for output file
     input = open(sys.argv[1])
-    output = open(sys.argv[3], 'w')
-    
+    output = open(sys.argv[3], "w")
+
     ## check each word in the dictionary against the board for a match ###
     for line in input.readlines():
-        word = line.rstrip() # clobber trailing whitespace
-        if len(word) < 3: continue
-        
-        word = word.lower() # just in case...
-            
+        word = line.rstrip()  # clobber trailing whitespace
+        if len(word) < 3:
+            continue
+
+        word = word.lower()  # just in case...
+
         check = board.CheckForWord(word)
-        if check == True: output.write(word + "\n")        
+        if check == True:
+            output.write(word + "\n")
 
     sys.exit(0)
